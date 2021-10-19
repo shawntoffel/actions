@@ -5,7 +5,7 @@ inputs:
   github-user:
     description: 'The GitHub username for which stats will be pulled.'
     required: true
-  github-access-token:
+  github-token:
     description: 'The GitHub personal access token to use when fetching stats.'
     required: true
   file:
