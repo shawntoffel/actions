@@ -1,0 +1,25 @@
+name: 'QMK Compile'
+description: 'Compiles a qmk keyboard'
+author: shawntoffel
+inputs:
+  path: 
+    description: 'Path to the keyboard directory'
+    required: true
+    default: '.'
+  name: 
+    description: 'Name of the keyboard'
+    required: true
+  flavor: 
+    description: 'Name of the flavor/revisou within the directory'
+    required: true
+  keymap: 
+    description: 'Name of the keymap'
+    required: true
+    default: 'default'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.path }}
+    - ${{ inputs.flavor }}
+    - ${{ inputs.keymap }}
