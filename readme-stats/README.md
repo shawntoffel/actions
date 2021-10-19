@@ -1,3 +1,5 @@
+# readme-stats
+
 Updates a README with GitHub user stats.
 
 ### Usage

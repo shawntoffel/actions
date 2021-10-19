@@ -1,3 +1,5 @@
+# qmk
+
 Compiles a QMK keyboard
 
 ### Usage
