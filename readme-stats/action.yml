@@ -1,0 +1,22 @@
+name: 'README Stats'
+description: 'Updates stats in a README file.'
+author: shawntoffel
+inputs:
+  github-user:
+    description: 'The GitHub username for which stats will be pulled.'
+    required: true
+  github-access-token:
+    description: 'The GitHub personal access token to use when fetching stats.'
+    required: true
+  file:
+    description: 'The file where stats will be written.'
+    required: false
+    default: "README"
+runs:
+  using: "composite"
+  steps:
+    - name: Update GitHub stats
+      run: sh ${{ github.action_path }}/github/stats.sh ${{ inputs.github-user }} > ${{ github.workspace }}/${{ inputs.file }}
+      shell: sh
+      env:
+        STATS_FETCH_TOKEN: ${{ inputs.github-token }}
