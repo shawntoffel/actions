@@ -2,9 +2,6 @@ name: 'README Stats'
 description: 'Updates stats in a README file.'
 author: shawntoffel
 inputs:
-  github-user:
-    description: 'The GitHub username for which stats will be pulled.'
-    required: true
   github-token:
     description: 'The GitHub personal access token to use when fetching stats.'
     required: true
@@ -12,11 +9,16 @@ inputs:
     description: 'The file where stats will be written.'
     required: false
     default: "README"
+  exclude:
+    description: 'Regex pattern for repos to exclude from the contribution count.'
+    required: false
+    default: ""
 runs:
   using: "composite"
   steps:
     - name: Update GitHub stats
-      run: sh ${{ github.action_path }}/github/stats.sh ${{ inputs.github-user }} > ${{ github.workspace }}/${{ inputs.file }}
+      run: docker run -e GHS_TOKEN=$GHS_TOKEN -e GHS_EXCLUDE=$GHS_EXCLUDE ghcr.io/shawntoffel/go-github-stats:0.0.1 > ${{ github.workspace }}/${{ inputs.file }}
       shell: sh
       env:
-        STATS_FETCH_TOKEN: ${{ inputs.github-token }}
+        GHS_TOKEN: ${{ inputs.github-token }}
+        GHS_EXCLUDE: ${{ inputs.exclude }}
