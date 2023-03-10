@@ -24,5 +24,5 @@ runs:
   using: "composite"
   steps:
     - name: Update GitHub stats
-      run: docker run -i ghcr.io/shawntoffel/githubstats:${{ inputs.version }} --token=${{ inputs.github-token }} --login=${{ inputs.github-user }} --exclude=${{ inputs.exclude }} > ${{ github.workspace }}/${{ inputs.file }}
+      run: docker run -i ghcr.io/shawntoffel/githubstats:${{ inputs.version }} --token="${{ inputs.github-token }}" --login="${{ inputs.github-user }}" --exclude="${{ inputs.exclude }}" > "${{ github.workspace }}/${{ inputs.file }}"
       shell: sh
