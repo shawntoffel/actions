@@ -5,6 +5,9 @@ inputs:
   github-token:
     description: 'The GitHub personal access token to use when fetching stats.'
     required: true
+  github-user:
+    description: 'The GitHub username for which stats will be pulled.'
+    required: true
   file:
     description: 'The file where stats will be written.'
     required: false
@@ -13,12 +16,13 @@ inputs:
     description: 'Regex pattern for repos to exclude from the contribution count.'
     required: false
     default: ""
+  version:
+    description: 'Version of the underlying githubstats docker image'
+    required: false
+    default: "0.0.2"
 runs:
   using: "composite"
   steps:
     - name: Update GitHub stats
-      run: docker run -e GHS_TOKEN=$GHS_TOKEN -e GHS_EXCLUDE=$GHS_EXCLUDE ghcr.io/shawntoffel/go-github-stats:0.0.1 > ${{ github.workspace }}/${{ inputs.file }}
+      run: docker run -i ghcr.io/shawntoffel/githubstats:${{ inputs.version }} --token=${{ inputs.github-token }} --login=${{ inputs.github-user }} --exclude=${{ inputs.exclude }} > ${{ github.workspace }}/${{ inputs.file }}
       shell: sh
-      env:
-        GHS_TOKEN: ${{ inputs.github-token }}
-        GHS_EXCLUDE: ${{ inputs.exclude }}
